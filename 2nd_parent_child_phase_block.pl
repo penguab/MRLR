@@ -14,8 +14,8 @@ open my $fileh,'<',$file;
 while(<$fileh>){
 	chomp;
 	my @line=split;	
-	my $p=(split /;/,$line[2])[1];
-	my $o=(split /;/,$line[3])[1];
+	my $p=(split /;/,$line[4])[1];
+	my $o=(split /;/,$line[5])[1];
 	my $pos=$p.";".$o;
 	if(!defined($start)){
 		$start=$line[1];

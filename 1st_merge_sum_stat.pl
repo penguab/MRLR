@@ -3,7 +3,7 @@
 use strict;
 
 my $file = shift or die "Usage: $0 <merge_match.10k_sum_intersect>\n";
-my @F_HR=&array($file,8);
+&array($file,8);
 
 sub array{
 my ($file,$n)=@_;
@@ -28,7 +28,7 @@ while(<$file_h>){
 	}
 	else{
 		if(defined($before) && ($id ne $before)){
-			if($sum>=5 and $high>=1){
+			if($sum>=1 and $high>=1){
 				print "$before\t$start\t$end\t$sum\t$high\tFather-Child\n";
 			}
 		}
@@ -45,10 +45,9 @@ while(<$file_h>){
 }
 
 if(eof($file_h)){
-	if($sum>=5 and $high>=1){
-                push @array, "$before\t$start\t$end\t$sum\t$high\tFather-Child\n";
+	if($sum>=1 and $high>=1){
+                print "$before\t$start\t$end\t$sum\t$high\tFather-Child\n";
         }
 }
-return @array;
 }
 

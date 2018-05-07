@@ -32,10 +32,10 @@ while(<$fileh>){
 	foreach my $i(0..$#sym){
 		$info{$sym[$i]}=$cont[$i];
 	}
-	if(exists $info{"PS"} and exists  $info{"PQ"} and exists $info{"JQ"} and exists  $info{"DP"} and exists  $info{"AO"} and exists  $info{"QA"}){
+	if(exists $info{"PS"} and exists  $info{"DP"} and exists  $info{"AO"} and exists  $info{"QA"}){
 		$PS=$info{"PS"};
-		$PQ=$info{"PQ"};
-		$JQ=$info{"JQ"};
+		$PQ=$info{"PQ"} if exists $info{"PQ"};
+		$JQ=$info{"JQ"} if exists $info{"JQ"};
 		$DP=$info{"DP"};
 		$AO=$info{"AO"};
 		$QA=$info{"QA"};

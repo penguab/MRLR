@@ -8,7 +8,7 @@ open my $fileh,'<',$file;
 while(<$fileh>){
         my @line=split;
 	my $mark=0;
-	foreach my $i(4..6){
+	foreach my $i(6){
 		unless($line[$i]=~/^[01]\|[01]/){
         	       $mark=1;
 			last;
