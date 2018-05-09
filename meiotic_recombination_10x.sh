@@ -71,8 +71,8 @@ perl -lane 'print if $F[3]>10000' 2nd_${Sample}_M_C_block >2nd_${Sample}_M_C_blo
 2nd_HR_test.pl 2nd_${Sample}_M_C_HR $child >2nd_${Sample}_M_C_HR_test_C
 2nd_test_sum.pl 2nd_${Sample}_M_C_HR_test_M 2nd_${Sample}_M_C_HR_test_C >2nd_${Sample}_M_C_HR_test_sum
 
-2nd_parameter.pl 2nd_${Sample}_F_C_HR_test_sum >final_${Sample}_F_C_sum
-2nd_parameter.pl 2nd_${Sample}_M_C_HR_test_sum >final_${Sample}_M_C_sum
+2nd_parameter.pl 2nd_${Sample}_F_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_F_C_sum
+2nd_parameter.pl 2nd_${Sample}_M_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_M_C_sum
 
 mkdir tmp.files |mv 1st* tmp.files | mv 2nd* tmp.files
 
