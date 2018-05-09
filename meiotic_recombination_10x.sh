@@ -73,6 +73,7 @@ perl -lane 'print if $F[3]>10000' 2nd_${Sample}_M_C_block >2nd_${Sample}_M_C_blo
 
 2nd_parameter.pl 2nd_${Sample}_F_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_F_C_sum
 2nd_parameter.pl 2nd_${Sample}_M_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_M_C_sum
+2nd_vcf.pl 2nd_${Sample}_haplo_shuffle > final_${Sample}_child.vcf
 
 mkdir tmp.files |mv 1st* tmp.files | mv 2nd* tmp.files
 
