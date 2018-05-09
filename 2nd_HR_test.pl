@@ -30,6 +30,7 @@ while(<$vcf_h>){
 	next unless ($info{"GT"} eq "1|0" or $info{"GT"} eq "0|1");
 	$info{"BX"}=~s/-[^;|^,]*//g;
 	my @barcode=split /,/,$info{"BX"};
+	next unless (defined $barcode[0] and defined $barcode[1]);
 	if($line[0] eq $site[0] and $line[1]>=$site[-3] and  $line[1]<=$site[-2] and $mark==0){
                 if($info{"GT"} eq "0|1"){
                        push @seq3,$barcode[0];
@@ -132,7 +133,7 @@ sub test{
 	foreach my $m (0..$#c){
 		foreach my $n (0..$#d){
 			if($c[$m] eq $d[$n]){
-				$count++;
+			$count++;
 			}
 		}
 	}

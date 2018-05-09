@@ -10,12 +10,12 @@ mother=`readlink -f $2`
 child=`readlink -f $3`
 Sample=$4
 
-if [ -d ${Sample}_out ]; then
+if [ -d trio_${Sample} ]; then
         echo -e "Folder exists; Use a different name\n" && exit 1; else
-        mkdir ${Sample}_out && cd ${Sample}_out
+        mkdir trio_${Sample} && cd trio_${Sample}
 fi
 
-echo -e "This is the pipeline for identification of meiotic recombination events using trio samples of 10x genomics longranger vcf outputs\n\nWe assume the script directory and Bedtools were added in path environment\n\n"
+echo -e "\n\nThis is the pipeline for identification of meiotic recombination events using trio samples of 10x genomics longranger vcf outputs\n\nWe assume the script directory and Bedtools were added in path environment\n\n"
 echo "Program starts!"
 echo "collect haplotype information"
 
@@ -56,6 +56,7 @@ perl -lane 'print if $F[3]>10000' 2nd_${Sample}_F_C_block >2nd_${Sample}_F_C_blo
 2nd_HR.pl 2nd_${Sample}_F_C_match_sum_stat >2nd_${Sample}_F_C_HR
 2nd_HR_test.pl 2nd_${Sample}_F_C_HR $father >2nd_${Sample}_F_C_HR_test_F
 2nd_HR_test.pl 2nd_${Sample}_F_C_HR $child >2nd_${Sample}_F_C_HR_test_C
+2nd_test_sum.pl 2nd_${Sample}_F_C_HR_test_F 2nd_${Sample}_F_C_HR_test_C >2nd_${Sample}_F_C_HR_test_sum
 
 echo "second round: detect meiotic recombination in mother"
 1st_haplotype_group_filter.pl 2nd_${Sample}_haplo_shuffle M >2nd_${Sample}_M_C_haplo
@@ -68,8 +69,11 @@ perl -lane 'print if $F[3]>10000' 2nd_${Sample}_M_C_block >2nd_${Sample}_M_C_blo
 2nd_HR.pl 2nd_${Sample}_M_C_match_sum_stat >2nd_${Sample}_M_C_HR
 2nd_HR_test.pl 2nd_${Sample}_M_C_HR $mother >2nd_${Sample}_M_C_HR_test_M
 2nd_HR_test.pl 2nd_${Sample}_M_C_HR $child >2nd_${Sample}_M_C_HR_test_C
+2nd_test_sum.pl 2nd_${Sample}_M_C_HR_test_M 2nd_${Sample}_M_C_HR_test_C >2nd_${Sample}_M_C_HR_test_sum
 
-2nd_test_sum.pl 2nd_${Sample}_F_C_HR_test_F 2nd_${Sample}_F_C_HR_test_C >final_${Sample}_F_C_HR_test_sum
-2nd_test_sum.pl 2nd_${Sample}_M_C_HR_test_M 2nd_${Sample}_M_C_HR_test_C >final_${Sample}_M_C_HR_test_sum
+2nd_parameter.pl 2nd_${Sample}_F_C_HR_test_sum >final_${Sample}_F_C_sum
+2nd_parameter.pl 2nd_${Sample}_M_C_HR_test_sum >final_${Sample}_M_C_sum
+
+mkdir tmp.files |mv 1st* tmp.files | mv 2nd* tmp.files
 
 echo -e "finished\n\n\n"

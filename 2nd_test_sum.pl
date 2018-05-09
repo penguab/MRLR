@@ -54,13 +54,13 @@ close $file2_h;
 foreach my $id (keys %info){
 	my @value=split /\t/,$info{$id};
 	if($value[2] eq "error" or $value[5] eq "error"){
-		print "$id\t$info{$id}\tswitch_error\n";
+		next;
 	}
 	elsif($value[2] eq "yes" and $value[5] eq "yes" ){
 		print "$id\t$info{$id}\thigh_conf\n";
 	}
 	else{
-		print "$id\t$info{$id}\tlow_conf\n";
+		next;
 	}
 }
 
