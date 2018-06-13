@@ -23,14 +23,14 @@ git clone https://github.com/penguab/MRLR.git
 ```
 Then, please also add this directory to your PATH:
 ```
-export PATH=$PWD/meiotic_recombination_10x/:$PATH
+export PATH=$PWD/MRLR/:$PATH
 ```
 
 ## Usage
 
 Three vcf files from trio samples of 10x genomics longranger vcf outputs are required for analysis. A new direcoty will be generated to hold the output files.
 ```
-meiotic_recombination_10x.sh <Father_vcf> <Mother_vcf> <Child_vcf> <output_profix>
+MRLR.sh <Father_vcf> <Mother_vcf> <Child_vcf> <output_profix>
 ```
 
 ## News
