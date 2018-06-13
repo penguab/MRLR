@@ -19,7 +19,7 @@ The program was tested on a x86_64 Linux system with a 8GB physical memory. The 
 ## Installation
 
 ```
-git clone https://github.com/penguab/meiotic_recombination_10x.git
+git clone https://github.com/penguab/MRLR.git
 ```
 Then, please also add this directory to your PATH:
 ```
