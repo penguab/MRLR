@@ -1,18 +1,79 @@
 #!/usr/bin/bash
 #
-if [ $# != 4 ]; then
-        echo $0 \<Father_vcf\> \<Mother_vcf\> \<Child_vcf\> \<output_profix\>
-        exit 1
+usage() { echo "Usage: $0 -f <Father_vcf> -m <Mother_vcf> -c <Child_vcf> [-oablrs]" 1>&2; 
+	echo "  -f   father vcf file from longranger output" 1>&2;
+	echo "  -m   mother vcf file from longranger output" 1>&2;
+	echo "  -c   child vcf file from longranger output" 1>&2;
+	echo "------------optional--------";
+	echo "  -o   output file profix; default='trio'" 1>&2;
+	echo "  -a   min arm length (kb); default=20" 1>&2;
+	echo "  -b   min supporting barcode; default=4" 1>&2;
+	echo "  -l   min block length (kb); default=500" 1>&2;
+	echo "  -p   max breakpoint region length(kb); default=100" 1>&2;
+	echo "  -s   min SNV number; default=20" 1>&2;
+	exit 1; }
+
+while getopts ":f:m:c:o:a:b:l:p:s:" option; do
+    case "${option}" in
+	f)
+            father=`readlink -f ${OPTARG}`
+            ;;
+        m)
+            mother=`readlink -f ${OPTARG}`
+            ;;
+        c)
+            child=`readlink -f ${OPTARG}`
+            ;;
+        o)
+            Sample=${OPTARG}
+            ;;
+	a)
+            a=${OPTARG}
+            ;;
+	b)
+            b=${OPTARG}
+            ;;
+	l)
+            l=${OPTARG}
+            ;;
+        p)
+            p=${OPTARG}
+            ;;
+        s)
+            s=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+if  [[ -z "${father}" || -z "${mother}" || -z "${child}" ]] ; then
+        usage
+fi
+if [ -z "${Sample}" ] ; then
+        Sample="trio"
+fi
+if [ -z "${a}" ] ; then
+	a=20
+fi
+if [ -z "${b}" ] ; then
+	b=4
+fi
+if [ -z "${l}" ] ; then
+	l=500
+fi
+if [ -z "${p}" ] ; then
+	p=100
+fi
+if [ -z $s ] ; then
+	s=20
 fi
 
-father=`readlink -f $1`
-mother=`readlink -f $2`
-child=`readlink -f $3`
-Sample=$4
-
-if [ -d trio_${Sample} ]; then
+if [ -d ${Sample} ]; then
         echo -e "Folder exists; Use a different name\n" && exit 1; else
-        mkdir trio_${Sample} && cd trio_${Sample}
+        mkdir ${Sample} && cd ${Sample}
 fi
 
 echo -e "\n\nThis is the pipeline for identification of meiotic recombination events using trio samples of 10x genomics longranger vcf outputs\n\nWe assume the script directory and Bedtools were added in path environment\n\n"
@@ -71,8 +132,8 @@ perl -lane 'print if $F[3]>10000' 2nd_${Sample}_M_C_block >2nd_${Sample}_M_C_blo
 2nd_HR_test.pl 2nd_${Sample}_M_C_HR $child >2nd_${Sample}_M_C_HR_test_C
 2nd_test_sum.pl 2nd_${Sample}_M_C_HR_test_M 2nd_${Sample}_M_C_HR_test_C >2nd_${Sample}_M_C_HR_test_sum
 
-2nd_parameter.pl 2nd_${Sample}_F_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_F_C_sum
-2nd_parameter.pl 2nd_${Sample}_M_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_M_C_sum
+2nd_parameter.pl ${a} ${b} ${l} ${p} ${s} 2nd_${Sample}_F_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_F_C_sum
+2nd_parameter.pl ${a} ${b} ${l} ${p} ${s} 2nd_${Sample}_M_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_M_C_sum
 2nd_vcf.pl 2nd_${Sample}_haplo_shuffle > final_${Sample}_child.vcf
 
 mkdir tmp.files |mv 1st* tmp.files | mv 2nd* tmp.files
