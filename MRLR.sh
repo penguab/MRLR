@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 #
-usage() { echo "Usage: $0 -f <Father_vcf> -m <Mother_vcf> -c <Child_vcf> [-oablrs]" 1>&2; 
+usage() { echo "Usage: $0 -f <Father_vcf> -m <Mother_vcf> -c <Child_vcf> [-oablps]" 1>&2; 
 	echo "  -f   father vcf file from longranger output" 1>&2;
 	echo "  -m   mother vcf file from longranger output" 1>&2;
 	echo "  -c   child vcf file from longranger output" 1>&2;

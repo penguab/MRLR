@@ -30,7 +30,7 @@ export PATH=$PWD/MRLR/:$PATH
 
 Three vcf files from trio samples of 10x genomics longranger vcf outputs are required for analysis. A new direcoty will be generated to hold the output files.
 ```
-MRLR.sh -f <Father_vcf> -m <Mother_vcf> -c <Child_vcf> [-oablrs]
+MRLR.sh -f <Father_vcf> -m <Mother_vcf> -c <Child_vcf> [-oablps]
   -f   father vcf file from longranger output
   -m   mother vcf file from longranger output
   -c   child vcf file from longranger output
