@@ -43,6 +43,13 @@ MRLR.sh -f <Father_vcf> -m <Mother_vcf> -c <Child_vcf> [-oablps]
   -s   min SNV number; default=20
 ```
 
-## News
+To test the pipeline.
+```
+gzip -d *.gz
+```
+MRLR.sh -f NA12891_chr20.vcf -m NA12892_chr20.vcf -c NA12878_chr20.vcf -o NA12878_chr20
+```
 
+## News
+11/28/2018: update test files for the pipeline
 

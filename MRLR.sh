@@ -73,7 +73,7 @@ fi
 
 if [ -d ${Sample} ]; then
         echo -e "Folder exists; Use a different name\n" && exit 1; else
-        mkdir ${Sample} && cd ${Sample}
+        mkdir trio_${Sample} && cd trio_${Sample}
 fi
 
 echo -e "\n\nThis is the pipeline for identification of meiotic recombination events using trio samples of 10x genomics longranger vcf outputs\n\nWe assume the script directory and Bedtools were added in path environment\n\n"
@@ -100,7 +100,7 @@ perl -lane '$len=$F[2]-$F[1];if($len>=9999){print "$F[0]\t$F[1]\t$F[2]\t$len"}' 
 1st_parent_child_match_split.pl 1st_${Sample}_M_C_match >1st_${Sample}_M_C_match_split
 1st_split_sum.pl 1st_${Sample}_M_C_match_split >1st_${Sample}_M_C_split_sum
 
-echo "first round: reshuffle child genome"
+echo "first round: reconstruct gamete genome"
 bedtools window -a 1st_${Sample}_F_C_split_sum -b 1st_${Sample}_M_C_split_sum -w 0 >1st_${Sample}_split_merge
 1st_split_merge_sum.pl 1st_${Sample}_split_merge >1st_${Sample}_split_merge_sum
 1st_merge_sum_stat.pl 1st_${Sample}_split_merge_sum >1st_${Sample}_split_merge_sum_stat
@@ -136,6 +136,6 @@ perl -lane 'print if $F[3]>10000' 2nd_${Sample}_M_C_block >2nd_${Sample}_M_C_blo
 2nd_parameter.pl ${a} ${b} ${l} ${p} ${s} 2nd_${Sample}_M_C_HR_test_sum |sort -k1,1 -k2,2n >final_${Sample}_M_C_sum
 2nd_vcf.pl 2nd_${Sample}_haplo_shuffle > final_${Sample}_child.vcf
 
-mkdir tmp.files |mv 1st* tmp.files | mv 2nd* tmp.files
+mkdir ${Sample}_tmp.files |mv 1st* 2nd* ${Sample}_tmp.files 
 
 echo -e "finished\n\n\n"
