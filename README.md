@@ -28,7 +28,7 @@ export PATH=$PWD/MRLR/:$PATH
 
 ## Usage
 
-Three vcf files from trio samples of 10x genomics longranger vcf outputs are required for analysis. A new direcoty will be generated to hold the output files.
+Three vcf files from trio samples of 10x genomics longranger vcf outputs are required for analysis. The outputs have three files: final_$profix_child.vcf (Reconstructed gamete genomes), final_$profix_F_C_sum (Recombination events from Father) and final_$profix_M_C_sum (Recombination events from Mother).
 ```
 MRLR.sh -f <Father_vcf> -m <Mother_vcf> -c <Child_vcf> [-oablps]
   -f   father vcf file from longranger output
