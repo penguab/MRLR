@@ -14,7 +14,7 @@ This is a pipeline to identify meiotic recombination events that occur during ga
 
 ## System requirements and dependency
 
-The program was tested on a x86_64 Linux system with a 8GB physical memory. The work can be usually finished within half an hour. Bedtools is required for the program. It is included in this repository.
+The program was tested on a x86_64 Linux system with a 8GB physical memory. The work can be usually finished within half an hour. Bedtools (https://github.com/arq5x/bedtools2) is required for the program.
 
 ## Installation
 
