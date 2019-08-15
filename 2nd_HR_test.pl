@@ -25,6 +25,14 @@ while(<$vcf_h>){
 	foreach (0..$#symb){
 		$info{$symb[$_]}=$cont[$_];
 	}
+	if(! exists $info{"AO"}){
+		if(exists  $info{"AD"}){
+			$info{"AO"}=(split /,/, $info{"AD"})[1];
+			$info{"QA"}=$info{"AO"}*30;
+			$info{"RO"}=(split /,/, $info{"AD"})[0];
+			$info{"QR"}=$info{"RO"}*30;
+		}
+	}
 	next unless(exists $info{"RO"} and exists $info{"AO"} and exists $info{"BX"} and exists $info{"PS"});
 	next unless ($info{"RO"}>=3 and $info{"QR"}/$info{"RO"}>=30 and $info{"AO"}>=3 and $info{"QA"}/$info{"AO"}>=30 and $line[6] eq "PASS");
 	next unless ($info{"GT"} eq "1|0" or $info{"GT"} eq "0|1");

@@ -32,6 +32,12 @@ while(<$fileh>){
 	foreach my $i(0..$#sym){
 		$info{$sym[$i]}=$cont[$i];
 	}
+	if(! exists $info{"AO"}){
+		if(exists  $info{"AD"}){
+			$info{"AO"}=(split /,/, $info{"AD"})[1];
+			$info{"QA"}=$info{"AO"}*30;
+		}
+	}
 	if(exists $info{"PS"} and exists  $info{"DP"} and exists  $info{"AO"} and exists  $info{"QA"}){
 		$PS=$info{"PS"};
 		$PQ=$info{"PQ"} if exists $info{"PQ"};
