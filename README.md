@@ -4,7 +4,7 @@ A pipeline to identify meiotic recombination events using trio samples of 10x ge
 
 Author: Peng Xu
 
-Email: pxu@uabmc.edu
+Email: peng.xu@mssm.edu
 
 Draft date: April. 30, 2018
 
